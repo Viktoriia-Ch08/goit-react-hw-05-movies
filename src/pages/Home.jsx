@@ -1,4 +1,4 @@
-import HomeList from 'components/HomeList/HomeList';
+import MoviesList from 'components/MoviesList/MoviesList';
 import { useEffect, useState } from 'react';
 import { getMovies } from 'services/movies-api';
 
@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <main>
-      <HomeList movies={movies} />
+      <MoviesList movies={movies} />
     </main>
   );
 };
