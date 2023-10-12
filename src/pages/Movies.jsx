@@ -14,7 +14,6 @@ const Movies = () => {
   const [page, setPage] = useState(1);
   const [loader, setLoader] = useState(false);
   const [totalPages, setTotalPages] = useState([]);
-  const inputValue = searchParams.get('query') ?? '';
 
   useEffect(() => {
     const searchValue = searchParams.get('query');
@@ -45,14 +44,10 @@ const Movies = () => {
     fetchMoviesByValue();
   }, [searchValue, page]);
 
-  const updateQueryParam = query => {
-    const queryInfo = query !== '' ? { query } : {};
-    setSearchParams(queryInfo);
-  };
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    setSearchValue(event.target.search.value);
+  const handleSubmit = value => {
+    const query = value !== '' ? { query: value } : {};
+    setSearchParams(query);
+    setSearchValue(value);
     setPage(1);
     setMovies([]);
   };
@@ -91,11 +86,7 @@ const Movies = () => {
   return (
     <>
       <main>
-        <SearchBox
-          value={inputValue}
-          onChange={updateQueryParam}
-          onSubmit={handleSubmit}
-        />
+        <SearchBox value={searchValue} onSubmit={handleSubmit} />
         {loader && <ClipLoader />}
         {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
       </main>
