@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const SearchBox = ({ defaultValue, onSubmit }) => {
+const SearchBox = ({ onSubmit }) => {
   const [value, setValue] = useState('');
-
-  useEffect(() => {
-    if (!defaultValue) return;
-    setValue(defaultValue);
-  }, [defaultValue]);
 
   const handleSubmit = event => {
     event.preventDefault();
     onSubmit(value);
+    setValue('');
   };
 
   return (

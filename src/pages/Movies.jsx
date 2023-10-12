@@ -19,7 +19,7 @@ const Movies = () => {
     const searchValue = searchParams.get('query');
     if (!searchValue) return;
     setSearchValue(searchValue);
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     if (!searchValue) return;
@@ -86,7 +86,7 @@ const Movies = () => {
   return (
     <>
       <main>
-        <SearchBox value={searchValue} onSubmit={handleSubmit} />
+        <SearchBox onSubmit={handleSubmit} />
         {loader && <ClipLoader />}
         {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
       </main>

@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { StyledMoviesList } from './MoviesList.styled';
 import MovieListItem from './MovieListItem/MovieListItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ClipLoader } from 'react-spinners';
+// import { ClipLoader } from 'react-spinners';
 
 const MoviesList = ({ movies, nextPage }) => {
   const location = useLocation();
