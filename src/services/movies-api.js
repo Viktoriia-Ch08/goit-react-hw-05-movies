@@ -29,8 +29,11 @@ async function getReviews(id) {
   return response.data;
 }
 
-async function searchMoviesByValue(value) {
-  const response = await axios.get(`${SEARCH_MOVIE_URL}?query=${value}`);
+async function searchMoviesByValue(value, page) {
+  const response = await axios.get(
+    `${SEARCH_MOVIE_URL}?query=${value}&page=${page}`
+  );
+
   return response.data;
 }
 export { getMovies, getMovieDetails, getCast, getReviews, searchMoviesByValue };

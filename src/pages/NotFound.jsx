@@ -1,12 +1,18 @@
+import { Link, useLocation } from 'react-router-dom';
+import defaultImg from '../images/default-movie@1x.jpg';
+
 const NotFound = () => {
+  const location = useLocation();
+  const backHomeLink = location.state?.from ?? '/';
+
   return (
     <div>
-      <img src="" alt="Smth went wrong" />
+      <img src={defaultImg} alt="Smth went wrong" width={'200px'} />
       <p>
         Ooops, sorry, we didn`t find the movie. You can return home and try
         again.
       </p>
-      <button type="button">Return Home</button>
+      <Link to={backHomeLink}>Return Home</Link>
     </div>
   );
 };

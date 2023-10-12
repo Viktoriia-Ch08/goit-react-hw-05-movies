@@ -1,4 +1,4 @@
-// import styled from 'styled-components';
+import styled from 'styled-components';
 // import { NavLink } from 'react-router-dom';
 
 // const StyledHomeItem = styled(NavLink)`
@@ -14,4 +14,7 @@
 //   }
 // `;
 
-// export { StyledHomeItem };
+const Item = styled.li`
+  width: calc((100% - 60px) / 4);
+`;
+export { Item };

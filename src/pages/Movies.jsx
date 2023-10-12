@@ -3,35 +3,92 @@ import SearchBox from 'components/Search/SearchBox';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { searchMoviesByValue } from 'services/movies-api';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
-
-  const updateQueryString = query => {
-    const nextParams = query !== '' ? { query } : {};
-    setSearchParams(nextParams);
-  };
+  const [searchValue, setSearchValue] = useState(null);
+  const [page, setPage] = useState(1);
+  const [loader, setLoader] = useState(false);
+  const [totalPages, setTotalPages] = useState([]);
+  const inputValue = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    async function handleSearchData() {
-      const data = searchParams.get('query');
-      const moviesForList = await searchMoviesByValue(data);
-      setMovies(moviesForList.results);
-    }
-
-    handleSearchData();
+    const searchValue = searchParams.get('query');
+    if (!searchValue) return;
+    setSearchValue(searchValue);
   }, []);
+
+  useEffect(() => {
+    if (!searchValue) return;
+    setLoader(true);
+    async function fetchMoviesByValue() {
+      const response = await searchMoviesByValue(searchValue, page);
+      setLoader(false);
+      if (!response.total_results) {
+        return showNotification(
+          'Ooops, sorry, we didn`t find movies. Write correct name.'
+        );
+      }
+      const { results, total_pages } = response;
+
+      setTotalPages(total_pages);
+      if (page === 1) {
+        setMovies(results);
+      } else {
+        setMovies(state => [...state, ...results]);
+      }
+    }
+    fetchMoviesByValue();
+  }, [searchValue, page]);
+
+  const updateQueryParam = query => {
+    const queryInfo = query !== '' ? { query } : {};
+    setSearchParams(queryInfo);
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
+    const searchValue = searchParams.get('query');
+    setSearchValue(searchValue);
+    setPage(1);
+    setMovies([]);
+  };
+
+  const incrementPage = () => {
+    if (page >= totalPages) return;
+    setPage(state => state + 1);
+  };
+
+  const showNotification = title => {
+    toast.error(title, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
   };
 
   return (
-    <main>
-      <SearchBox onChange={updateQueryString} onSubmit={handleSubmit} />
-      <MoviesList movies={movies} />
-    </main>
+    <>
+      <main>
+        <SearchBox
+          value={inputValue}
+          onChange={updateQueryParam}
+          onSubmit={handleSubmit}
+        />
+        {loader && <ClipLoader />}
+        {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
+      </main>
+      <ToastContainer />
+    </>
   );
 };
 

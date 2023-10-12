@@ -17,12 +17,12 @@ const MovieDetails = () => {
   const BASIC_IMG_URL = 'https://image.tmdb.org/t/p/w200';
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backHomeLink = location.state?.from ?? '/';
 
   useEffect(() => {
     async function fetchMovie() {
-      const movie = await getMovieDetails(movieId);
-      setMovie(movie);
+      const movieInfo = await getMovieDetails(movieId);
+      setMovie(movieInfo);
     }
 
     fetchMovie();
@@ -32,9 +32,9 @@ const MovieDetails = () => {
 
   return (
     <>
-      {movie ? (
+      {movie && (
         <div>
-          <Link to={backLinkHref}>Back Home</Link>
+          <Link to={backHomeLink}>Back Home</Link>
           <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
 
           <h1>{title}</h1>
@@ -63,8 +63,6 @@ const MovieDetails = () => {
             <Route path="reviews" element={<ReviewsList id={movieId} />} />
           </Routes>
         </div>
-      ) : (
-        <NotFound />
       )}
     </>
   );

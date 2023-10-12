@@ -1,8 +1,10 @@
-const SearchBox = ({ onSubmit, onChange }) => {
+const SearchBox = ({ value, onSubmit, onChange }) => {
   return (
     <form onSubmit={onSubmit}>
       <input
         type="text"
+        name="search"
+        value={value}
         onChange={({ target }) => {
           onChange(target.value);
         }}
