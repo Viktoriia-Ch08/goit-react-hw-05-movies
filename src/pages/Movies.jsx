@@ -29,7 +29,7 @@ const Movies = () => {
       const response = await searchMoviesByValue(searchValue, page);
       setLoader(false);
       if (!response.total_results) {
-        return showNotification(
+        return showError(
           'Ooops, sorry, we didn`t find movies. Write correct name.'
         );
       }
@@ -52,19 +52,31 @@ const Movies = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const searchValue = searchParams.get('query');
-    setSearchValue(searchValue);
+    setSearchValue(event.target.search.value);
     setPage(1);
     setMovies([]);
   };
 
   const incrementPage = () => {
-    if (page >= totalPages) return;
+    if (page >= totalPages) return showWarning('You get the end!');
     setPage(state => state + 1);
   };
 
-  const showNotification = title => {
+  const showError = title => {
     toast.error(title, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  const showWarning = title => {
+    toast.warning(title, {
       position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,

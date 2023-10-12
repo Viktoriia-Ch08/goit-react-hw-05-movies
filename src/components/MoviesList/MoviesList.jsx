@@ -29,12 +29,7 @@ const MoviesList = ({ movies, nextPage }) => {
           dataLength={movies.length} //This is important field to render the next data
           next={nextPage}
           hasMore={true}
-          // loader={<ClipLoader />}
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
+          scrollThreshold={0.9}
         />
       )}
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Link,
   Outlet,
@@ -8,7 +8,6 @@ import {
   useParams,
 } from 'react-router-dom';
 import { getMovieDetails } from 'services/movies-api';
-import NotFound from './NotFound';
 import CastList from 'components/Cast/CastList';
 import ReviewsList from 'components/Reviews/ReviewsList';
 
@@ -17,7 +16,7 @@ const MovieDetails = () => {
   const BASIC_IMG_URL = 'https://image.tmdb.org/t/p/w200';
   const { movieId } = useParams();
   const location = useLocation();
-  const backHomeLink = location.state?.from ?? '/';
+  const backHomeLink = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     async function fetchMovie() {
@@ -34,7 +33,7 @@ const MovieDetails = () => {
     <>
       {movie && (
         <div>
-          <Link to={backHomeLink}>Back Home</Link>
+          <Link to={backHomeLink.current}>Back Home</Link>
           <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
 
           <h1>{title}</h1>
