@@ -10,6 +10,8 @@ import {
 import { getMovieDetails } from 'services/movies-api';
 import CastList from 'components/Cast/CastList';
 import ReviewsList from 'components/Reviews/ReviewsList';
+import { LinkToHome } from 'pages/NotFound/NotFound.styled';
+import { Container, ImageWrapper } from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
@@ -32,10 +34,11 @@ const MovieDetails = () => {
   return (
     <>
       {movie && (
-        <div>
-          <Link to={backHomeLink.current}>Back Home</Link>
-          <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
-
+        <Container>
+          <LinkToHome to={backHomeLink.current}>Back Home</LinkToHome>
+          <ImageWrapper>
+            <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
+          </ImageWrapper>
           <h1>{title}</h1>
           <p>Release data: {release_date}</p>
           <h2>Overview </h2>
@@ -61,7 +64,7 @@ const MovieDetails = () => {
             <Route path="cast" element={<CastList id={movieId} />} />
             <Route path="reviews" element={<ReviewsList id={movieId} />} />
           </Routes>
-        </div>
+        </Container>
       )}
     </>
   );

@@ -1,8 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
-import { StyledMoviesList } from './MoviesList.styled';
+import { useLocation } from 'react-router-dom';
+import { LinkToMovieDetails, StyledMoviesList } from './MoviesList.styled';
 import MovieListItem from './MovieListItem/MovieListItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
-// import { ClipLoader } from 'react-spinners';
 
 const MoviesList = ({ movies, nextPage }) => {
   const location = useLocation();
@@ -13,14 +12,18 @@ const MoviesList = ({ movies, nextPage }) => {
         {movies &&
           movies.map(({ id, title, vote_average, poster_path }) => {
             return (
-              <Link to={`/movies/${id}`} key={id} state={{ from: location }}>
+              <LinkToMovieDetails
+                to={`/movies/${id}`}
+                key={id}
+                state={{ from: location }}
+              >
                 <MovieListItem
                   id={id}
                   title={title}
                   average={vote_average}
                   poster_path={poster_path}
                 />
-              </Link>
+              </LinkToMovieDetails>
             );
           })}
       </StyledMoviesList>

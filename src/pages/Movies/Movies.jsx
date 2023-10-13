@@ -3,7 +3,7 @@ import SearchBox from 'components/Search/SearchBox';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { searchMoviesByValue } from 'services/movies-api';
-import ClipLoader from 'react-spinners/ClipLoader';
+import BounceLoader from 'react-spinners/ClipLoader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -87,7 +87,7 @@ const Movies = () => {
     <>
       <main>
         <SearchBox onSubmit={handleSubmit} />
-        {loader && <ClipLoader />}
+        {loader && <BounceLoader />}
         {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
       </main>
       <ToastContainer />

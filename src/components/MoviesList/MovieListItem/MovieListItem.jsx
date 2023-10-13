@@ -1,4 +1,4 @@
-import { Item } from './MovieListItem.styled';
+import { Item, Poster, Text } from './MovieListItem.styled';
 import defaultImg from '../../../images/default-movie@1x.jpg';
 import React from 'react';
 
@@ -7,12 +7,12 @@ const MovieListItem = ({ title, average, poster_path }) => {
   return (
     <Item>
       {poster_path ? (
-        <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
+        <Poster src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
       ) : (
-        <img src={defaultImg} alt={title} width={'200px'} />
+        <Poster src={defaultImg} alt={title} width={'200px'} />
       )}
-      <p>{title && title.substring(0, 20)}</p>
-      <p>Average: {average.toFixed(1)}</p>
+      <Text>{title && title.substring(0, 20)}</Text>
+      <Text>Average: {average.toFixed(1)}</Text>
     </Item>
   );
 };
