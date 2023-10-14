@@ -12,6 +12,7 @@ export const Container = styled.div`
 export const LinkToHome = styled(NavLink)`
   position: relative;
   padding: 13px 20px 13px;
+  width: 110px;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 1px;

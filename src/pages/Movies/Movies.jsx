@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { searchMoviesByValue } from 'services/movies-api';
 import BounceLoader from 'react-spinners/ClipLoader';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { showError, showWarning } from 'services/notification';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,40 +56,20 @@ const Movies = () => {
     setPage(state => state + 1);
   };
 
-  const showError = title => {
-    toast.error(title, {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-  };
-
-  const showWarning = title => {
-    toast.warning(title, {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-  };
-
   return (
     <>
       <main>
-        <SearchBox onSubmit={handleSubmit} />
-        {loader && <BounceLoader />}
-        {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
+        <section>
+          <SearchBox onSubmit={handleSubmit} />
+          <BounceLoader
+            className="loader"
+            loading={loader}
+            color={'#751975'}
+            size={80}
+          />
+          {movies && <MoviesList movies={movies} nextPage={incrementPage} />}
+        </section>
       </main>
-      <ToastContainer />
     </>
   );
 };

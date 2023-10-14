@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Link,
   Outlet,
   Route,
   Routes,
@@ -11,7 +10,19 @@ import { getMovieDetails } from 'services/movies-api';
 import CastList from 'components/Cast/CastList';
 import ReviewsList from 'components/Reviews/ReviewsList';
 import { LinkToHome } from 'pages/NotFound/NotFound.styled';
-import { Container, ImageWrapper } from './MovieDetails.styled';
+import {
+  Container,
+  DetailsItem,
+  DetailsLink,
+  DetailsList,
+  GenreItem,
+  GenresList,
+  Header,
+  ImageWrapper,
+  InfoContainer,
+  InfoWrapper,
+  MovieContainer,
+} from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
@@ -36,30 +47,37 @@ const MovieDetails = () => {
       {movie && (
         <Container>
           <LinkToHome to={backHomeLink.current}>Back Home</LinkToHome>
-          <ImageWrapper>
-            <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
-          </ImageWrapper>
-          <h1>{title}</h1>
-          <p>Release data: {release_date}</p>
-          <h2>Overview </h2>
-          <p>{overview}</p>
-          <h3>Genres</h3>
-          <ul>
-            {genres &&
-              genres.map(({ id, name }) => {
-                return <li key={id}>{name}</li>;
-              })}
-          </ul>
-          <ul>
-            <li>
-              <Link to="cast">Cast</Link>
-            </li>
-            <Link to="reviews ">Reviews </Link>
-            <li></li>
-          </ul>
+          <MovieContainer>
+            <InfoWrapper>
+              <ImageWrapper>
+                <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
+              </ImageWrapper>
+            </InfoWrapper>
+            <InfoContainer>
+              <Header>{title}</Header>
+              <h2>Overview </h2>
+              <p>Release data: {release_date}</p>
 
+              <p>{overview}</p>
+              <h3>Genres</h3>
+              <GenresList>
+                {genres &&
+                  genres.map(({ id, name }) => {
+                    return <GenreItem key={id}>{name}</GenreItem>;
+                  })}
+              </GenresList>
+              <h3>Details</h3>
+              <DetailsList>
+                <DetailsItem>
+                  <DetailsLink to="cast">Cast</DetailsLink>
+                </DetailsItem>
+                <DetailsItem>
+                  <DetailsLink to="reviews ">Reviews </DetailsLink>
+                </DetailsItem>
+              </DetailsList>
+            </InfoContainer>
+          </MovieContainer>
           <Outlet />
-
           <Routes>
             <Route path="cast" element={<CastList id={movieId} />} />
             <Route path="reviews" element={<ReviewsList id={movieId} />} />

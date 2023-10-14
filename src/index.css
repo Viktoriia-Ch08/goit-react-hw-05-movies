@@ -10,8 +10,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Mooli', sans-serif;
 }
 
 img {
@@ -20,7 +19,7 @@ img {
 }
 
 ul,
-h1
+h1,
 h2,
 h3,
 h4,

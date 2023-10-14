@@ -1,8 +1,12 @@
+import noInfoImg from '../../images/no-results.png';
+import { Container, NoResultImg, Text } from './NoInfo.styled';
+
 const NoInfo = () => {
   return (
-    <div>
-      <p>Sorry, we didn`t find any info</p>
-    </div>
+    <Container>
+      <NoResultImg src={noInfoImg} alt="No info" />
+      <Text>Sorry, results not found</Text>
+    </Container>
   );
 };
 

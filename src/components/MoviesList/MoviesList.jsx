@@ -29,7 +29,7 @@ const MoviesList = ({ movies, nextPage }) => {
       </StyledMoviesList>
       {nextPage && (
         <InfiniteScroll
-          dataLength={movies.length} //This is important field to render the next data
+          dataLength={movies.length}
           next={nextPage}
           hasMore={true}
           scrollThreshold={0.9}
