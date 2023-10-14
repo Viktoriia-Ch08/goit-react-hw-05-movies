@@ -3,7 +3,7 @@ import CastListItem from './CastListItem/CastListItem';
 import { getCast } from 'services/movies-api';
 import NoInfo from 'components/NoInfo/NoInfo';
 import { BounceLoader } from 'react-spinners';
-import { List, Wrapper } from './Cast.styled';
+import { List, Wrapper } from './CastList.styled';
 import { showError } from 'services/notification';
 
 const CastList = ({ id }) => {
@@ -14,9 +14,10 @@ const CastList = ({ id }) => {
       try {
         const castInfo = await getCast(id);
         setCast(castInfo.cast);
-        setLoader(false);
       } catch (error) {
         showError(error.message);
+      } finally {
+        setLoader(false);
       }
     }
     fetchCast();

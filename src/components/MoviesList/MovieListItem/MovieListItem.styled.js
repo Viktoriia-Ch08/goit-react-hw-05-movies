@@ -5,8 +5,12 @@ export const Poster = styled.img`
   object-fit: contain;
 `;
 
-export const Text = styled.p`
+export const Title = styled.p`
   font-size: 18px;
+`;
+
+export const Average = styled.p`
+  font-weight: 400;
 `;
 
 export const Item = styled.li`

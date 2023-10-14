@@ -7,8 +7,9 @@ export const StyledMoviesList = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  margin-bottom: 30px;
 `;
 
 export const LinkToMovieDetails = styled(NavLink)`
-  width: 200px;
+  width: calc((100% - 60px) / 4);
 `;

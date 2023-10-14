@@ -1,10 +1,11 @@
-const ReviewsListItem = ({ id, author, content }) => {
+import { Author, Item, Text } from './ReviewsListItem.styled';
+
+const ReviewsListItem = ({ author, content }) => {
   return (
-    <li>
-      <p>{id}</p>
-      <p>Author: {author}</p>
-      <p>{content}</p>
-    </li>
+    <Item>
+      <Author>Author: {author}</Author>
+      <Text>{content}</Text>
+    </Item>
   );
 };
 

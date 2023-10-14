@@ -32,7 +32,7 @@ export const ImageWrapper = styled.div`
 `;
 
 export const MovieImage = styled.img`
-  width: 200px;
+  width: 300px;
   object-fit: contain;
 `;
 
@@ -86,4 +86,14 @@ export const DetailsLink = styled(NavLink)`
   &:visited {
     color: black;
   }
+`;
+
+export const Text = styled.p`
+  text-align: justify;
+  font-weight: 400;
+`;
+
+export const Release = styled.p`
+  font-style: italic;
+  font-weight: 400;
 `;

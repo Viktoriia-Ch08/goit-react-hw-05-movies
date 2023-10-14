@@ -22,19 +22,27 @@ import {
   InfoContainer,
   InfoWrapper,
   MovieContainer,
+  MovieImage,
+  Release,
+  Text,
 } from './MovieDetails.styled';
+import { BounceLoader } from 'react-spinners';
+import { Wrapper } from 'pages/Movies/Movies.styled';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
+  const [loader, setLoader] = useState(false);
   const BASIC_IMG_URL = 'https://image.tmdb.org/t/p/w200';
   const { movieId } = useParams();
   const location = useLocation();
   const backHomeLink = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
+    setLoader(true);
     async function fetchMovie() {
       const movieInfo = await getMovieDetails(movieId);
       setMovie(movieInfo);
+      setLoader(false);
     }
 
     fetchMovie();
@@ -44,21 +52,31 @@ const MovieDetails = () => {
 
   return (
     <>
-      {movie && (
+      <Wrapper>
+        <BounceLoader
+          className="loader"
+          loading={loader}
+          color={'#751975'}
+          size={80}
+        />
+      </Wrapper>
+      {movie && !loader && (
         <Container>
           <LinkToHome to={backHomeLink.current}>Back Home</LinkToHome>
           <MovieContainer>
             <InfoWrapper>
               <ImageWrapper>
-                <img src={`${BASIC_IMG_URL}${poster_path}`} alt={title} />
+                <MovieImage
+                  src={`${BASIC_IMG_URL}${poster_path}`}
+                  alt={title}
+                />
               </ImageWrapper>
             </InfoWrapper>
             <InfoContainer>
               <Header>{title}</Header>
               <h2>Overview </h2>
-              <p>Release data: {release_date}</p>
-
-              <p>{overview}</p>
+              <Release>Release data: {release_date}</Release>
+              <Text>{overview}</Text>
               <h3>Genres</h3>
               <GenresList>
                 {genres &&
