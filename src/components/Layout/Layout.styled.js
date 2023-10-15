@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  .loader {
+    top: 50%;
+    left: 50%;
+    transition: transform(-50%, -50%);
+  }
+`;
 
 export const Header = styled.header`
   position: fixed;
