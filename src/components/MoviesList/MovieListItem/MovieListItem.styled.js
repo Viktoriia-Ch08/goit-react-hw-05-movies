@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Poster = styled.img`
   width: 200px;
   object-fit: contain;
+  min-height: 350px;
 `;
 
 export const Title = styled.p`

@@ -6,6 +6,7 @@ export const Item = styled.li`
   align-items: center;
   gap: 4px;
   width: calc((100% - 60px) / 5);
+  min-height: 450px;
   padding: 0 20px 20px;
   overflow: hidden;
   text-align: center;
@@ -26,8 +27,9 @@ export const Item = styled.li`
 
 export const ActorName = styled.p`
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
+  overflow-wrap: break-word;
 `;
 
 export const Header = styled.h3`

@@ -3,7 +3,7 @@ import { LinkToMovieDetails, StyledMoviesList } from './MoviesList.styled';
 import MovieListItem from './MovieListItem/MovieListItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const MoviesList = ({ movies, nextPage }) => {
+const MoviesList = ({ movies, nextPage, loader }) => {
   const location = useLocation();
 
   return (
@@ -27,7 +27,7 @@ const MoviesList = ({ movies, nextPage }) => {
             );
           })}
       </StyledMoviesList>
-      {nextPage && (
+      {!loader && nextPage && (
         <InfiniteScroll
           dataLength={movies.length}
           next={nextPage}

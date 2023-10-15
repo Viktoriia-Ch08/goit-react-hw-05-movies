@@ -28,6 +28,7 @@ import {
 } from './MovieDetails.styled';
 import { BounceLoader } from 'react-spinners';
 import { Wrapper } from 'pages/Movies/Movies.styled';
+import { showError } from 'services/notification';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
@@ -40,9 +41,14 @@ const MovieDetails = () => {
   useEffect(() => {
     setLoader(true);
     async function fetchMovie() {
-      const movieInfo = await getMovieDetails(movieId);
-      setMovie(movieInfo);
-      setLoader(false);
+      try {
+        const movieInfo = await getMovieDetails(movieId);
+        setMovie(movieInfo);
+      } catch (error) {
+        showError(error.message);
+      } finally {
+        setLoader(false);
+      }
     }
 
     fetchMovie();
@@ -59,49 +65,50 @@ const MovieDetails = () => {
           color={'#751975'}
           size={80}
         />
+
+        {movie && !loader && (
+          <Container>
+            <LinkToHome to={backHomeLink.current}>Back Home</LinkToHome>
+            <MovieContainer>
+              <InfoWrapper>
+                <ImageWrapper>
+                  <MovieImage
+                    src={`${BASIC_IMG_URL}${poster_path}`}
+                    alt={title}
+                  />
+                </ImageWrapper>
+              </InfoWrapper>
+              <InfoContainer>
+                <Header>{title}</Header>
+                <h2>Overview </h2>
+                <Release>Release data: {release_date}</Release>
+                <Text>{overview}</Text>
+                <h3>Genres</h3>
+                <GenresList>
+                  {genres &&
+                    genres.map(({ id, name }) => {
+                      return <GenreItem key={id}>{name}</GenreItem>;
+                    })}
+                </GenresList>
+                <h3>Details</h3>
+                <DetailsList>
+                  <DetailsItem>
+                    <DetailsLink to="cast">Cast</DetailsLink>
+                  </DetailsItem>
+                  <DetailsItem>
+                    <DetailsLink to="reviews ">Reviews </DetailsLink>
+                  </DetailsItem>
+                </DetailsList>
+              </InfoContainer>
+            </MovieContainer>
+            <Outlet />
+            <Routes>
+              <Route path="cast" element={<CastList id={movieId} />} />
+              <Route path="reviews" element={<ReviewsList id={movieId} />} />
+            </Routes>
+          </Container>
+        )}
       </Wrapper>
-      {movie && !loader && (
-        <Container>
-          <LinkToHome to={backHomeLink.current}>Back Home</LinkToHome>
-          <MovieContainer>
-            <InfoWrapper>
-              <ImageWrapper>
-                <MovieImage
-                  src={`${BASIC_IMG_URL}${poster_path}`}
-                  alt={title}
-                />
-              </ImageWrapper>
-            </InfoWrapper>
-            <InfoContainer>
-              <Header>{title}</Header>
-              <h2>Overview </h2>
-              <Release>Release data: {release_date}</Release>
-              <Text>{overview}</Text>
-              <h3>Genres</h3>
-              <GenresList>
-                {genres &&
-                  genres.map(({ id, name }) => {
-                    return <GenreItem key={id}>{name}</GenreItem>;
-                  })}
-              </GenresList>
-              <h3>Details</h3>
-              <DetailsList>
-                <DetailsItem>
-                  <DetailsLink to="cast">Cast</DetailsLink>
-                </DetailsItem>
-                <DetailsItem>
-                  <DetailsLink to="reviews ">Reviews </DetailsLink>
-                </DetailsItem>
-              </DetailsList>
-            </InfoContainer>
-          </MovieContainer>
-          <Outlet />
-          <Routes>
-            <Route path="cast" element={<CastList id={movieId} />} />
-            <Route path="reviews" element={<ReviewsList id={movieId} />} />
-          </Routes>
-        </Container>
-      )}
     </>
   );
 };

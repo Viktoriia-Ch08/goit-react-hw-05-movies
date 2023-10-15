@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { getMovies } from 'services/movies-api';
 import { Wrapper } from './Home.styled';
+import { showError } from 'services/notification';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -11,9 +12,14 @@ const Home = () => {
   useEffect(() => {
     setLoader(true);
     const fetchMovies = async () => {
-      const { results } = await getMovies();
-      setLoader(false);
-      setMovies(results);
+      try {
+        const { results } = await getMovies();
+        setMovies(results);
+      } catch (error) {
+        showError(error.message);
+      } finally {
+        setLoader(false);
+      }
     };
 
     fetchMovies();
@@ -22,6 +28,7 @@ const Home = () => {
   return (
     <main>
       <Wrapper>
+        <MoviesList movies={movies} />
         <BounceLoader
           className="loader"
           loading={loader}
@@ -29,7 +36,6 @@ const Home = () => {
           size={80}
         />
       </Wrapper>
-      <MoviesList movies={movies} />
     </main>
   );
 };

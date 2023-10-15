@@ -1,22 +1,38 @@
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const FormElement = styled.form`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  min-width: 350px;
-  margin-top: 100px;
-  padding: 20px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
 `;
 
-export const LinkToHome = styled(NavLink)`
+export const Input = styled.input`
+  width: 200px;
+  height: 45px;
+  padding: 0 18px;
+
+  box-shadow: none;
+  border: 1px solid rgb(117 25 117);
+  border-radius: 17px;
+  background-color: #fff;
+  transition: box-shadow 400ms linear;
+  font-family: 'Mooli', sans-serif;
+
+  &:focus-visible {
+    outline: none;
+  }
+`;
+
+export const Button = styled.button`
   position: relative;
   padding: 13px 20px 13px;
   width: 110px;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 1px;
+  text-transform: uppercase;
   outline: 0;
   color: #fff;
   border: 1px solid black;
